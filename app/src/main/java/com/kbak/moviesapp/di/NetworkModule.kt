@@ -1,5 +1,6 @@
 package com.kbak.moviesapp.di
 
+import com.kbak.moviesapp.BuildConfig
 import com.kbak.moviesapp.data.remote.api.MovieApiService
 import com.kbak.moviesapp.data.remote.api.ApiClient
 import dagger.Module
@@ -22,7 +23,7 @@ object NetworkModule {
         return Interceptor { chain ->
             val original = chain.request()
             val url = original.url.newBuilder()
-                .addQueryParameter("api_key", ApiClient.API_KEY) // ✅ Uses constant from ApiClient
+                .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY) // ✅ Uses constant from ApiClient
                 .build()
 
             val request = original.newBuilder().url(url).build()
@@ -42,7 +43,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(ApiClient.BASE_URL) // ✅ Uses constant from ApiClient
+            .baseUrl("https://api.themoviedb.org/3/") // ✅ Uses constant from ApiClient
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
