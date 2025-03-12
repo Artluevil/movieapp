@@ -2,7 +2,6 @@ package com.kbak.moviesapp.di
 
 import com.kbak.moviesapp.BuildConfig
 import com.kbak.moviesapp.data.remote.api.MovieApiService
-import com.kbak.moviesapp.data.remote.api.ApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
