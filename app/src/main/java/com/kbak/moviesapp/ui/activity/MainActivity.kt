@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kbak.moviesapp.ui.screen.MovieListScreen
 import com.kbak.moviesapp.ui.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,14 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Log.d("MainActivity", "✅ MainActivity Created!")
-
-
-            val movieViewModel: MovieViewModel = hiltViewModel()
-
-            LaunchedEffect(Unit) {
-                Log.d("MainActivity", "✅ LaunchedEffect: Fetching movies...")
-                movieViewModel.fetchPopularMovies()
-            }
+            MovieListScreen() // ✅ Display the MovieListScreen here
         }
     }
 }
