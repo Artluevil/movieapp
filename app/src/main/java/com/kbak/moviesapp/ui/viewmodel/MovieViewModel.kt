@@ -19,7 +19,7 @@ class MovieViewModel @Inject constructor(private val repository: MovieRepository
     val moviesState = _moviesState.asStateFlow()
 
     init {
-        fetchPopularMovies() // ✅ Fetch data automatically when ViewModel is created
+        fetchPopularMovies() // Fetch data automatically when ViewModel is created
     }
 
     fun fetchPopularMovies() {

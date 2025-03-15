@@ -15,8 +15,10 @@ class MovieRepository @Inject constructor(private val apiService: MovieApiServic
         return try {
             val response: Response<MovieListResponse> = apiService.getPopularMovies(page = page)
             if (response.isSuccessful) {
-                Log.d("MovieRepository", "✅ API Success: ${response.body()?.results?.size} movies")
                 response.body()?.let {
+                    it.results.forEach {
+                        movie -> Log.d("MovieRepository", "✅ Movie: ${movie.title}, ${movie.overview}, ${movie.posterPath}")
+                    }
                     ApiResult.Success(it)
                 } ?: ApiResult.Error("Empty response body")
             } else {

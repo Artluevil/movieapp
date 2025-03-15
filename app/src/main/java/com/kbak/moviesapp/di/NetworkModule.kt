@@ -1,8 +1,8 @@
 package com.kbak.moviesapp.di
 
 import com.kbak.moviesapp.BuildConfig
+import com.kbak.moviesapp.data.remote.api.GenreApiService
 import com.kbak.moviesapp.data.remote.api.MovieApiService
-import com.kbak.moviesapp.data.remote.api.ApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,7 +43,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/") // ✅ Uses constant from ApiClient
+            .baseUrl("https://api.themoviedb.org/3/") // Uses constant from ApiClient
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -53,5 +53,10 @@ object NetworkModule {
     @Singleton
     fun provideMovieApiService(retrofit: Retrofit): MovieApiService {
         return retrofit.create(MovieApiService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideGenreApiService(retrofit: Retrofit): GenreApiService {
+        return retrofit.create(GenreApiService::class.java)
     }
 }
