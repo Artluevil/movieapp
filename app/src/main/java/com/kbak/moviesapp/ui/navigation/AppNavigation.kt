@@ -14,13 +14,14 @@ import com.google.gson.Gson
 import com.kbak.moviesapp.data.remote.model.Movie
 import com.kbak.moviesapp.ui.screen.MovieDetailsScreen
 import com.kbak.moviesapp.ui.screen.MovieListScreen
+import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieViewModel
 
 @Composable
-fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewModel) {
+fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewModel, genreViewModel: GenreViewModel) {
     NavHost(navController = navController, startDestination = "movie_list") {
         composable("movie_list") {
-            MovieListScreen(navController, movieViewModel)
+            MovieListScreen(navController, movieViewModel, genreViewModel)
         }
         composable(
             route = "movie_details/{movieJson}",

@@ -38,10 +38,13 @@ import com.kbak.moviesapp.ui.viewmodel.MovieViewModel
 import com.kbak.moviesapp.data.remote.model.Movie
 import com.kbak.moviesapp.ui.components.AnimatedBackground
 import com.kbak.moviesapp.ui.components.RatingBar
+import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
 import com.kbak.moviesapp.utils.ApiResult
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
-fun MovieListScreen(navController: NavController, viewModel: MovieViewModel = hiltViewModel()) {
+fun MovieListScreen(navController: NavController, viewModel: MovieViewModel = hiltViewModel(), genreViewModel: GenreViewModel) {
     val moviesState by viewModel.moviesState.collectAsState()
 
     when (moviesState) {
@@ -49,7 +52,7 @@ fun MovieListScreen(navController: NavController, viewModel: MovieViewModel = hi
             CircularProgressIndicator(Modifier.padding(16.dp))
         }
         is ApiResult.Success -> {
-            MovieList(navController, movies = (moviesState as ApiResult.Success<List<Movie>>).data)
+            MovieList(navController, movies = (moviesState as ApiResult.Success<List<Movie>>).data, genreViewModel)
         }
         is ApiResult.Error -> {
             Text(
@@ -62,7 +65,7 @@ fun MovieListScreen(navController: NavController, viewModel: MovieViewModel = hi
 }
 
 @Composable
-fun MovieList(navController: NavController, movies: List<Movie>) {
+fun MovieList(navController: NavController, movies: List<Movie>, genreViewModel: GenreViewModel) {
     Box(modifier = Modifier.fillMaxSize()) {
         AnimatedBackground() // Custom background animation
 
@@ -73,6 +76,14 @@ fun MovieList(navController: NavController, movies: List<Movie>) {
             ) {
                 items(movies) { movie ->
 
+                    // 🔥 Remember genre names as state
+                    val genreNames = remember { mutableStateOf("") }
+
+                    // 🔄 Fetch genre names for each movie
+                    LaunchedEffect(movie.genreIds) {
+                        val names = movie.genreIds.mapNotNull { genreViewModel.getGenreNameById(it) }
+                        genreNames.value = names.joinToString(", ") // Join names with comma
+                    }
                     //Glow Animation
                     val infiniteTransition = rememberInfiniteTransition()
                     val glowAlpha by infiniteTransition.animateFloat(
@@ -137,6 +148,18 @@ fun MovieList(navController: NavController, movies: List<Movie>) {
                                     textAlign = TextAlign.Center,
                                     color = Color.White,
                                     fontSize = 14.sp,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                                Text(
+                                    text = genreNames.value,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .wrapContentWidth(Alignment.CenterHorizontally)
+                                        .padding(top = 4.dp),
+                                    textAlign = TextAlign.Center,
+                                    color = Color.Gray,
+                                    fontSize = 12.sp,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
                                 )
