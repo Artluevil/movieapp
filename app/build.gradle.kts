@@ -46,6 +46,7 @@ android {
 dependencies {
     // ✅ Hilt Dependencies (Now using KSP)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.adapters)
     ksp(libs.hilt.compiler)
 
     // ✅ Room Dependencies (KSP instead of KAPT)
@@ -90,4 +91,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas") // ✅ Tells Room where to store schema history
+    arg("room.incremental", "true") // ✅ Improves compilation speed
+    arg("room.expandProjection", "true") // ✅ Prevents some runtime crashes
 }
