@@ -34,7 +34,7 @@ data class Movie(
             ""
         }
     val fullBackdropPath: String
-        get() = "https://image.tmdb.org/t/p/w500${backdropPath ?: ""}" // ✅ Safe fallback
+        get() = "https://image.tmdb.org/t/p/w500${backdropPath ?: ""}"
 
 }
 
@@ -45,9 +45,9 @@ fun MovieEntity.toMovie(): Movie {
         title = this.title,
         originalTitle = this.originalTitle,
         overview = this.overview,
-        posterPath = this.posterPath, // ✅ Already nullable
-        backdropPath = this.backdropPath, // ✅ Already nullable
-        releaseDate = this.releaseDate, // ✅ Already nullable
+        posterPath = this.posterPath,
+        backdropPath = this.backdropPath,
+        releaseDate = this.releaseDate,
         voteAverage = this.voteAverage,
         voteCount = this.voteCount,
         popularity = this.popularity,
@@ -65,9 +65,9 @@ fun Movie.toMovieEntity(): MovieEntity {
         title = this.title,
         originalTitle = this.originalTitle,
         overview = this.overview,
-        posterPath = this.posterPath ?: "", // ✅ Safe fallback
-        backdropPath = this.backdropPath ?: "", // ✅ Safe fallback
-        releaseDate = this.releaseDate ?: "", // ✅ Safe fallback
+        posterPath = this.posterPath ?: "",
+        backdropPath = this.backdropPath ?: "",
+        releaseDate = this.releaseDate ?: "",
         voteAverage = this.voteAverage,
         voteCount = this.voteCount,
         popularity = this.popularity,

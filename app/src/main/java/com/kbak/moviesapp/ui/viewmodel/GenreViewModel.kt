@@ -18,22 +18,18 @@ class GenreViewModel @Inject constructor(
 
     init {
         Log.d("GenreViewModel", "✅ GenreViewModel initialized!")
-        fetchGenres() // ✅ Automatically fetch genres when ViewModel is created
+        fetchGenres()
     }
 
     fun fetchGenres() {
         viewModelScope.launch {
             try {
-                val genres = genreRepository.fetchGenresFromApi() // ✅ Fetch from API
+                val genres = genreRepository.fetchGenresFromApi()
                 Log.d("GenreViewModel", "🔥 Genres fetched from API: $genres")
 
-                // ✅ Insert into Room DB
                 genreRepository.insertGenres(genres.map { GenreEntity(it.id, it.name) })
-                Log.d("GenreViewModel", "✅ Genres saved to Room DB!")
 
-                // ✅ Fetch from Room to verify
                 genreRepository.getGenres().collect { savedGenres ->
-                    Log.d("GenreViewModel", "💾 Fetched from Room DB: $savedGenres")
                 }
             } catch (e: Exception) {
                 Log.e("GenreViewModel", "❌ Error fetching genres: ${e.message}", e)

@@ -47,7 +47,7 @@ class MovieViewModel @Inject constructor(private val repository: MovieRepository
             // Fetch from API
             when (val result = repository.getPopularMovies(page = 1)) {
                 is ApiResult.Success -> {
-                    Log.d("MovieViewModel", "🌍 API Fetched ${result.data.results.size} movies!")
+                    //Log.d("MovieViewModel", "🌍 API Fetched ${result.data.results.size} movies!")
 
                     // Convert List<Movie> → List<MovieEntity> before saving
                     val movieEntities = result.data.results.map { it.toMovieEntity() }
@@ -58,7 +58,7 @@ class MovieViewModel @Inject constructor(private val repository: MovieRepository
                     _moviesState.value = ApiResult.Success(result.data.results)
                 }
                 is ApiResult.Error -> {
-                    Log.e("MovieViewModel", "❌ Error fetching movies: ${result.message}")
+                    //Log.e("MovieViewModel", "❌ Error fetching movies: ${result.message}")
                     _moviesState.value = ApiResult.Error(result.message)
                 }
                 is ApiResult.Loading -> {} // action to implement

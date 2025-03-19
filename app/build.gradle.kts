@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.kbak.moviesapp"
-        minSdk = 24
+        minSdk = 31
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -44,24 +44,24 @@ android {
 }
 
 dependencies {
-    // ✅ Hilt Dependencies (Now using KSP)
+    // Hilt Dependencies (Now using KSP)
     implementation(libs.hilt.android)
     implementation(libs.androidx.adapters)
     ksp(libs.hilt.compiler)
 
-    // ✅ Room Dependencies (KSP instead of KAPT)
+    // Room Dependencies (KSP instead of KAPT)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler) // ✅ Use KSP for Room
 
-    // ✅ Hilt Navigation (For Jetpack Compose)
+    // Hilt Navigation (For Jetpack Compose)
     implementation(libs.hilt.navigation.compose)
 
-    // ✅ Android Core
+    // Android Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    // ✅ Jetpack Compose
+    // Jetpack Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -69,21 +69,24 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    // ✅ Retrofit (API Calls)
+    // Retrofit (API Calls)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    // ✅ OkHttp (Networking)
+    // OkHttp (Networking)
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
-    // ✅ Coil for Image Loading
+    // Coil for Image Loading
     implementation("io.coil-kt:coil-compose:2.4.0")
 
-    // ✅ Navigation
+    // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.5")
 
-    // ✅ Testing Dependencies
+    //splashscreen
+    implementation("androidx.core:core-splashscreen:1.2.0-beta01")
+
+    // Testing Dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
