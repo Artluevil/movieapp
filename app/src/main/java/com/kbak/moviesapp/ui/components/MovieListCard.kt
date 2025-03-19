@@ -71,7 +71,7 @@ fun MovieListCard(movie: Movie, navController: NavController, genreViewModel: Ge
             )
             .clickable {
                 val movieJson = Uri.encode(Gson().toJson(movie))
-                navController.navigate("movie_details/$movieJson")
+                navController.navigate("movie_details/$movieJson/${movie.id}")
             }
     ) {
         Card(

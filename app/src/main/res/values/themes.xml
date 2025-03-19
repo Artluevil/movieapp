@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.MoviesApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.MoviesApp.Splash" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/deep_navy</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/transparent_icon</item><!-- Fixes Flash of White -->
+    </style>
 </resources>

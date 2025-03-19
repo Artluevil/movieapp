@@ -16,11 +16,11 @@ import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
     private val apiService: MovieApiService,
-    private val movieDao: MovieDao // ✅ Inject MovieDao for Room DB
+    private val movieDao: MovieDao // Inject MovieDao for Room DB
 ) {
-    init {
+    /*init {
         Log.d("HiltCheck", "✅ Hilt injected MovieRepository successfully!")
-    }
+    }*/
 
     /**
      * Fetch popular movies from API and store in Room DB.
@@ -36,17 +36,14 @@ class MovieRepository @Inject constructor(
                     movieDao.deleteAllMovies() // Clear old movies
                     movieDao.insertMovies(movies.map { it.toMovieEntity() })
 
-                    movies.forEach { movie ->
-                        Log.d("MovieRepository", "✅ Movie: ${movie.title}, ${movie.overview}, ${movie.posterPath}")
-                    }
                     ApiResult.Success(movieListResponse)
                 } ?: ApiResult.Error("Empty response body")
             } else {
-                Log.e("MovieRepository", "❌ API Error: ${response.code()} - ${response.message()}")
+                //Log.e("MovieRepository", "❌ API Error: ${response.code()} - ${response.message()}")
                 ApiResult.Error("API Error: ${response.code()} - ${response.message()}")
             }
         } catch (e: Exception) {
-            Log.e("MovieRepository", "❌ Network Error: ${e.message}")
+            //Log.e("MovieRepository", "❌ Network Error: ${e.message}")
             ApiResult.Error("Network Error: ${e.message}")
         }
     }
@@ -68,6 +65,6 @@ class MovieRepository @Inject constructor(
     }
     suspend fun saveMoviesToDb(movies: List<MovieEntity>) {
         movieDao.insertMovies(movies)
-        Log.d("MovieRepository", "💾 Saved ${movies.size} movies to Room DB!")
+        //Log.d("MovieRepository", "💾 Saved ${movies.size} movies to Room DB!")
     }
 }

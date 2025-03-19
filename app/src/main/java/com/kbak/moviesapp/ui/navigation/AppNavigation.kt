@@ -15,21 +15,26 @@ import com.kbak.moviesapp.data.remote.model.Movie
 import com.kbak.moviesapp.ui.screen.MovieDetailsScreen
 import com.kbak.moviesapp.ui.screen.MovieListScreen
 import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
+import com.kbak.moviesapp.ui.viewmodel.MovieDetailsViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieViewModel
 
 @Composable
-fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewModel, genreViewModel: GenreViewModel) {
+fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewModel, genreViewModel: GenreViewModel, movieDetailsViewModel: MovieDetailsViewModel) {
     NavHost(navController = navController, startDestination = "movie_list") {
-        composable("movie_list") {
+        composable(route = "movie_list") {
             MovieListScreen(navController, movieViewModel, genreViewModel)
         }
         composable(
-            route = "movie_details/{movieJson}",
-            arguments = listOf(navArgument("movieJson") { type = NavType.StringType }),
+            route = "movie_details/{movieJson}/{movieId}",
+            arguments = listOf(
+                navArgument("movieJson") { type = NavType.StringType },
+                navArgument("movieId") {type = NavType.IntType}
+                )
         ) { backStackEntry ->
             val movieJson = backStackEntry.arguments?.getString("movieJson")
             val movie = Gson().fromJson(Uri.decode(movieJson), Movie::class.java)
-            MovieDetailsScreen(movie)
+            val movieId = backStackEntry.arguments?.getInt("movieId")
+            MovieDetailsScreen(movieId, movie, genreViewModel, movieDetailsViewModel)
         }
     }
 }

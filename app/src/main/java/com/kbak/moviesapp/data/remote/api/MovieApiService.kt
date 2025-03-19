@@ -4,7 +4,7 @@ import com.kbak.moviesapp.data.remote.model.MovieListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface  MovieApiService {
+interface MovieApiService {
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("language") language: String = "en-US",
