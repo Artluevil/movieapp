@@ -1,5 +1,6 @@
 package com.kbak.moviesapp.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -18,11 +22,15 @@ import coil.compose.AsyncImage
 import com.kbak.moviesapp.R
 import com.kbak.moviesapp.data.remote.model.Movie
 import com.kbak.moviesapp.data.remote.model.MovieDetailsResponse
+import com.kbak.moviesapp.data.remote.model.MovieImagesResponse
+import com.kbak.moviesapp.ui.viewmodel.MovieImagesViewModel
 import com.kbak.moviesapp.utils.formatDate
 
 @Composable
-fun MovieDetailsContent(movie: Movie, genres: String, details: MovieDetailsResponse){
+fun MovieDetailsContent(movie: Movie, genres: String, details: MovieDetailsResponse, images: MovieImagesResponse){
     val scrollState = rememberScrollState()
+
+    Log.d("MovieImagesData", images.toString())
 
     Spacer(modifier = Modifier.height(16.dp))
     Text(
@@ -38,7 +46,7 @@ fun MovieDetailsContent(movie: Movie, genres: String, details: MovieDetailsRespo
         fontSize = 16.sp,
         modifier = Modifier.padding(bottom = 8.dp)
     )
-
+    /*
     AsyncImage(
         model = details.fullPosterPath.takeIf { it.startsWith("https") }, // Load only valid URLs
         contentDescription = details.title,
@@ -48,6 +56,8 @@ fun MovieDetailsContent(movie: Movie, genres: String, details: MovieDetailsRespo
         error = painterResource(id = R.drawable.placeholder_poster), // Fallback if image fails
         placeholder = painterResource(id = R.drawable.placeholder_poster) // Placeholder while loading
     )
+    */
+    ImagesSection(images)
     Spacer(modifier = Modifier.height(8.dp))
 
     VoteAverageCircularBar(voteAverage = details.voteAverage)
