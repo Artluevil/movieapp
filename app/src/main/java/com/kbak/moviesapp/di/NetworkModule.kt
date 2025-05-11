@@ -4,6 +4,7 @@ import com.kbak.moviesapp.BuildConfig
 import com.kbak.moviesapp.data.remote.api.GenreApiService
 import com.kbak.moviesapp.data.remote.api.MovieApiService
 import com.kbak.moviesapp.data.remote.api.MovieDetailsApiService
+import com.kbak.moviesapp.data.remote.api.MovieImagesApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,5 +66,9 @@ object NetworkModule {
     fun provideMovieDetailsApiService(retrofit: Retrofit): MovieDetailsApiService {
         return retrofit.create(MovieDetailsApiService::class.java)
     }
-
+    @Provides
+    @Singleton
+    fun provideMovieImagesApiService(retrofit: Retrofit): MovieImagesApiService {
+        return retrofit.create(MovieImagesApiService::class.java)
+    }
 }

@@ -13,6 +13,7 @@ import com.kbak.moviesapp.ui.navigation.AppNavigation
 import com.kbak.moviesapp.ui.screen.MovieListScreen
 import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieDetailsViewModel
+import com.kbak.moviesapp.ui.viewmodel.MovieImagesViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,9 +28,10 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val genreViewModel: GenreViewModel = hiltViewModel()
             val movieDetailsViewModel: MovieDetailsViewModel = hiltViewModel()
+            val movieImagesViewModel: MovieImagesViewModel = hiltViewModel()
             enableEdgeToEdge()
             //Log.d("MainActivity", "✅ GenreViewModel injected successfully!")
-            AppNavigation(navController, movieViewModel, genreViewModel, movieDetailsViewModel)
+            AppNavigation(navController, movieViewModel, genreViewModel, movieDetailsViewModel, movieImagesViewModel)
         }
     }
 }

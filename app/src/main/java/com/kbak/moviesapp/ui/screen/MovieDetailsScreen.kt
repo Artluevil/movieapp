@@ -18,26 +18,35 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.kbak.moviesapp.data.remote.model.Movie
 import com.kbak.moviesapp.data.remote.model.MovieDetailsResponse
+import com.kbak.moviesapp.data.remote.model.MovieImagesResponse
 import com.kbak.moviesapp.ui.components.AnimatedBackground
 import com.kbak.moviesapp.ui.components.MovieDetailsContent
 import com.kbak.moviesapp.ui.components.OfflineMovieDetailsContent
 import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieDetailsViewModel
+import com.kbak.moviesapp.ui.viewmodel.MovieImagesViewModel
 import com.kbak.moviesapp.utils.ApiResult
 
 @Composable
-fun MovieDetailsScreen(movieId: Int?, movie: Movie, genreViewModel: GenreViewModel, movieDetailsViewModel: MovieDetailsViewModel) {
+fun MovieDetailsScreen(movieId: Int?, movie: Movie, genreViewModel: GenreViewModel, movieDetailsViewModel: MovieDetailsViewModel, movieImagesViewModel: MovieImagesViewModel) {
     AnimatedBackground()
     val genreNames = remember { mutableStateOf("") }
 
     val movieDetailsState by movieDetailsViewModel.movieDetailsState.collectAsState()
+    val movieImagesState by movieImagesViewModel.movieImagesState.collectAsState()
+
+    Log.d("MovieId", movieId.toString())
 
     // Fetch genre names for each movie
     LaunchedEffect(movie.genreIds) {
         Log.d("MovieDetailsScreen", "🚀 LaunchedEffect triggered for movie: ${movie.title}")
         val names = movie.genreIds.mapNotNull { genreViewModel.getGenreNameById(it) }
         genreNames.value = names.joinToString(", ") // Join names with comma
-        if (movieId != null) movieDetailsViewModel.fetchMovieDetails(movieId)
+        if (movieId != null) {
+            movieDetailsViewModel.fetchMovieDetails(movieId)
+            movieImagesViewModel.fetchMovieImages(movieId)
+        }
+
     }
 
     Column(
@@ -46,17 +55,20 @@ fun MovieDetailsScreen(movieId: Int?, movie: Movie, genreViewModel: GenreViewMod
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        when (movieDetailsState) {
-            is ApiResult.Loading -> {
+        when {
+            movieDetailsState is ApiResult.Loading || movieImagesState is ApiResult.Loading -> {
                 CircularProgressIndicator()
             }
-            is ApiResult.Success -> {
+
+            movieDetailsState is ApiResult.Success && movieImagesState is ApiResult.Success -> {
                 val details = (movieDetailsState as ApiResult.Success<MovieDetailsResponse>).data
-                MovieDetailsContent(movie, genreNames.value, details)
+                val images = (movieImagesState as ApiResult.Success<MovieImagesResponse>).data
+                MovieDetailsContent(movie, genreNames.value, details, images)
             }
-            is ApiResult.Error -> {
+
+            else -> {
                 Text(
-                    text = "*You are in offline mode*",
+                    text = "*You are in offline mode or something went wrong*",
                     color = Color.Red,
                     modifier = Modifier.padding(16.dp)
                 )

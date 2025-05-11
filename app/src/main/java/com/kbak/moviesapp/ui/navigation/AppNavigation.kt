@@ -16,10 +16,11 @@ import com.kbak.moviesapp.ui.screen.MovieDetailsScreen
 import com.kbak.moviesapp.ui.screen.MovieListScreen
 import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieDetailsViewModel
+import com.kbak.moviesapp.ui.viewmodel.MovieImagesViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieViewModel
 
 @Composable
-fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewModel, genreViewModel: GenreViewModel, movieDetailsViewModel: MovieDetailsViewModel) {
+fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewModel, genreViewModel: GenreViewModel, movieDetailsViewModel: MovieDetailsViewModel, movieImagesViewModel: MovieImagesViewModel) {
     NavHost(navController = navController, startDestination = "movie_list") {
         composable(route = "movie_list") {
             MovieListScreen(navController, movieViewModel, genreViewModel)
@@ -34,7 +35,7 @@ fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewMod
             val movieJson = backStackEntry.arguments?.getString("movieJson")
             val movie = Gson().fromJson(Uri.decode(movieJson), Movie::class.java)
             val movieId = backStackEntry.arguments?.getInt("movieId")
-            MovieDetailsScreen(movieId, movie, genreViewModel, movieDetailsViewModel)
+            MovieDetailsScreen(movieId, movie, genreViewModel, movieDetailsViewModel, movieImagesViewModel)
         }
     }
 }
