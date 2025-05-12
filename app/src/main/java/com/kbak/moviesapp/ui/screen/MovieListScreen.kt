@@ -1,6 +1,5 @@
 package com.kbak.moviesapp.ui.screen
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -26,7 +26,9 @@ fun MovieListScreen(navController: NavController, viewModel: MovieViewModel = hi
 
     when (moviesState) {
         is ApiResult.Loading -> {
-            CircularProgressIndicator(Modifier.padding(16.dp))
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
         }
         is ApiResult.Success -> {
             MovieList(navController, movies = (moviesState as ApiResult.Success<List<Movie>>).data, genreViewModel)

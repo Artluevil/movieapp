@@ -32,7 +32,7 @@ fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewMod
             val movieJson = backStackEntry.arguments?.getString("movieJson")
             val movie = Gson().fromJson(Uri.decode(movieJson), Movie::class.java)
             val movieId = backStackEntry.arguments?.getInt("movieId")
-            MovieDetailsScreen(movieId, movie, genreViewModel, movieDetailsViewModel, movieImagesViewModel)
+            MovieDetailsScreen(movieId, movie, movieDetailsViewModel, movieImagesViewModel)
         }
     }
 }
