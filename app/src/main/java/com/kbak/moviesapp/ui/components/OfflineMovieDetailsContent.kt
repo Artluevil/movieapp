@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.kbak.moviesapp.R
 import com.kbak.moviesapp.data.remote.model.Movie
-import com.kbak.moviesapp.data.remote.model.MovieDetailsResponse
 import com.kbak.moviesapp.utils.formatDate
 
 @Composable
@@ -26,7 +25,7 @@ fun OfflineMovieDetailsContent(movie: Movie, genres: String){
 
     Spacer(modifier = Modifier.height(16.dp))
     Text(
-        text = "${movie.title}",
+        text = movie.title,
         color = Color.White,
         fontSize = 24.sp,
         modifier = Modifier.padding(bottom = 8.dp)

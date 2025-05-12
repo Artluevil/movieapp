@@ -1,6 +1,6 @@
 package com.kbak.moviesapp.ui.screen
 
-import android.util.Log
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -35,18 +35,14 @@ fun MovieDetailsScreen(movieId: Int?, movie: Movie, genreViewModel: GenreViewMod
     val movieDetailsState by movieDetailsViewModel.movieDetailsState.collectAsState()
     val movieImagesState by movieImagesViewModel.movieImagesState.collectAsState()
 
-    Log.d("MovieId", movieId.toString())
-
     // Fetch genre names for each movie
     LaunchedEffect(movie.genreIds) {
-        Log.d("MovieDetailsScreen", "🚀 LaunchedEffect triggered for movie: ${movie.title}")
-        val names = movie.genreIds.mapNotNull { genreViewModel.getGenreNameById(it) }
+        val names = movie.genreIds.mapNotNull { genreViewModel.getGenreNameById(it, callback = {}) }
         genreNames.value = names.joinToString(", ") // Join names with comma
         if (movieId != null) {
             movieDetailsViewModel.fetchMovieDetails(movieId)
             movieImagesViewModel.fetchMovieImages(movieId)
         }
-
     }
 
     Column(
@@ -63,7 +59,7 @@ fun MovieDetailsScreen(movieId: Int?, movie: Movie, genreViewModel: GenreViewMod
             movieDetailsState is ApiResult.Success && movieImagesState is ApiResult.Success -> {
                 val details = (movieDetailsState as ApiResult.Success<MovieDetailsResponse>).data
                 val images = (movieImagesState as ApiResult.Success<MovieImagesResponse>).data
-                MovieDetailsContent(movie, genreNames.value, details, images)
+                MovieDetailsContent(genreNames.value, details, images)
             }
 
             else -> {
