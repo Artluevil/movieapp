@@ -1,9 +1,6 @@
 package com.kbak.moviesapp.ui.navigation
 
 import android.net.Uri
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -35,7 +32,7 @@ fun AppNavigation(navController: NavHostController, movieViewModel: MovieViewMod
             val movieJson = backStackEntry.arguments?.getString("movieJson")
             val movie = Gson().fromJson(Uri.decode(movieJson), Movie::class.java)
             val movieId = backStackEntry.arguments?.getInt("movieId")
-            MovieDetailsScreen(movieId, movie, genreViewModel, movieDetailsViewModel, movieImagesViewModel)
+            MovieDetailsScreen(movieId, movie, movieDetailsViewModel, movieImagesViewModel)
         }
     }
 }

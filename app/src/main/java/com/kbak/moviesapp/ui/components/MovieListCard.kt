@@ -33,7 +33,7 @@ fun MovieListCard(movie: Movie, navController: NavController, genreViewModel: Ge
 
     // Fetch genre names for each movie
     LaunchedEffect(movie.genreIds) {
-        val names = movie.genreIds.mapNotNull { genreViewModel.getGenreNameById(it) }
+        val names = movie.genreIds.mapNotNull { genreViewModel.getGenreNameById(it, callback = {}) }
         genreNames.value = names.joinToString(", ") // Join names with comma
     }
 
@@ -110,7 +110,7 @@ fun MovieListCard(movie: Movie, navController: NavController, genreViewModel: Ge
                 )
 
                 Text(
-                    text = if (genreNames.value.isNotEmpty()) genreNames.value else "Unknown",
+                    text = genreNames.value.ifEmpty { "Unknown" },
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.CenterHorizontally)

@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt) // ✅ Hilt with KSP
-    alias(libs.plugins.ksp)  // ✅ KSP enabled
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -52,7 +52,7 @@ dependencies {
     // Room Dependencies (KSP instead of KAPT)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler) // ✅ Use KSP for Room
+    ksp(libs.androidx.room.compiler)
 
     // Hilt Navigation (For Jetpack Compose)
     implementation(libs.hilt.navigation.compose)
@@ -68,24 +68,13 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-
-    // Retrofit (API Calls)
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    // OkHttp (Networking)
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-
-    // Coil for Image Loading
-    implementation("io.coil-kt:coil-compose:2.4.0")
-
-    // Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.5")
-
-    //splashscreen
-    implementation("androidx.core:core-splashscreen:1.2.0-beta01")
-
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.coil.compose)
+    implementation(libs.navigation.compose)
+    implementation(libs.splashscreen)
     // Testing Dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -97,7 +86,7 @@ dependencies {
 }
 
 ksp {
-    arg("room.schemaLocation", "$projectDir/schemas") // ✅ Tells Room where to store schema history
-    arg("room.incremental", "true") // ✅ Improves compilation speed
-    arg("room.expandProjection", "true") // ✅ Prevents some runtime crashes
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
 }

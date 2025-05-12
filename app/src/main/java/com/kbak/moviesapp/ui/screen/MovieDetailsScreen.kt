@@ -1,6 +1,6 @@
 package com.kbak.moviesapp.ui.screen
 
-import android.util.Log
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,8 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,25 +26,18 @@ import com.kbak.moviesapp.ui.viewmodel.MovieImagesViewModel
 import com.kbak.moviesapp.utils.ApiResult
 
 @Composable
-fun MovieDetailsScreen(movieId: Int?, movie: Movie, genreViewModel: GenreViewModel, movieDetailsViewModel: MovieDetailsViewModel, movieImagesViewModel: MovieImagesViewModel) {
+fun MovieDetailsScreen(movieId: Int?, movie: Movie, movieDetailsViewModel: MovieDetailsViewModel, movieImagesViewModel: MovieImagesViewModel) {
     AnimatedBackground()
-    val genreNames = remember { mutableStateOf("") }
 
     val movieDetailsState by movieDetailsViewModel.movieDetailsState.collectAsState()
     val movieImagesState by movieImagesViewModel.movieImagesState.collectAsState()
+    val genreNames by movieDetailsViewModel.genreNames.collectAsState()
 
-    Log.d("MovieId", movieId.toString())
-
-    // Fetch genre names for each movie
-    LaunchedEffect(movie.genreIds) {
-        Log.d("MovieDetailsScreen", "🚀 LaunchedEffect triggered for movie: ${movie.title}")
-        val names = movie.genreIds.mapNotNull { genreViewModel.getGenreNameById(it) }
-        genreNames.value = names.joinToString(", ") // Join names with comma
-        if (movieId != null) {
-            movieDetailsViewModel.fetchMovieDetails(movieId)
-            movieImagesViewModel.fetchMovieImages(movieId)
+    LaunchedEffect(movieId) {
+        movieId?.let {
+            movieDetailsViewModel.fetchMovieDetails(it, movie.genreIds)
+            movieImagesViewModel.fetchMovieImages(it)
         }
-
     }
 
     Column(
@@ -63,7 +54,7 @@ fun MovieDetailsScreen(movieId: Int?, movie: Movie, genreViewModel: GenreViewMod
             movieDetailsState is ApiResult.Success && movieImagesState is ApiResult.Success -> {
                 val details = (movieDetailsState as ApiResult.Success<MovieDetailsResponse>).data
                 val images = (movieImagesState as ApiResult.Success<MovieImagesResponse>).data
-                MovieDetailsContent(movie, genreNames.value, details, images)
+                MovieDetailsContent(genreNames, details, images)
             }
 
             else -> {
@@ -72,7 +63,7 @@ fun MovieDetailsScreen(movieId: Int?, movie: Movie, genreViewModel: GenreViewMod
                     color = Color.Red,
                     modifier = Modifier.padding(16.dp)
                 )
-                OfflineMovieDetailsContent(movie, genreNames.value)
+                OfflineMovieDetailsContent(movie, genreNames)
             }
         }
     }
