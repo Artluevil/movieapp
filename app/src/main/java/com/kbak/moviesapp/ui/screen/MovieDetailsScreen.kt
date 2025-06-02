@@ -20,14 +20,12 @@ import com.kbak.moviesapp.data.remote.model.MovieImagesResponse
 import com.kbak.moviesapp.ui.components.AnimatedBackground
 import com.kbak.moviesapp.ui.components.MovieDetailsContent
 import com.kbak.moviesapp.ui.components.OfflineMovieDetailsContent
-import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieDetailsViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieImagesViewModel
 import com.kbak.moviesapp.utils.ApiResult
 
 @Composable
 fun MovieDetailsScreen(movieId: Int?, movie: Movie, movieDetailsViewModel: MovieDetailsViewModel, movieImagesViewModel: MovieImagesViewModel) {
-    AnimatedBackground()
 
     val movieDetailsState by movieDetailsViewModel.movieDetailsState.collectAsState()
     val movieImagesState by movieImagesViewModel.movieImagesState.collectAsState()

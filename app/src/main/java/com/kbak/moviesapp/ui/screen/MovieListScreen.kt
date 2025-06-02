@@ -16,7 +16,7 @@ import androidx.navigation.NavController
 import com.kbak.moviesapp.ui.viewmodel.MovieViewModel
 import com.kbak.moviesapp.data.remote.model.Movie
 import com.kbak.moviesapp.ui.components.AnimatedBackground
-import com.kbak.moviesapp.ui.components.MovieListCard
+import com.kbak.moviesapp.ui.components.MovieListCardContainer
 import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
 import com.kbak.moviesapp.utils.ApiResult
 
@@ -46,7 +46,6 @@ fun MovieListScreen(navController: NavController, viewModel: MovieViewModel = hi
 @Composable
 fun MovieList(navController: NavController, movies: List<Movie>, genreViewModel: GenreViewModel) {
     Box(modifier = Modifier.fillMaxSize()) {
-        AnimatedBackground() // Custom background animation
 
         Column(modifier = Modifier.fillMaxSize()) {
             LazyVerticalGrid(
@@ -54,7 +53,7 @@ fun MovieList(navController: NavController, movies: List<Movie>, genreViewModel:
                 modifier = Modifier.padding(16.dp).fillMaxWidth()
             ) {
                 items(movies) { movie ->
-                    MovieListCard(movie, navController, genreViewModel)
+                    MovieListCardContainer(movie, navController, genreViewModel)
                 }
             }
         }
