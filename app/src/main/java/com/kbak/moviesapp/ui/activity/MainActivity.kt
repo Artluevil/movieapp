@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.kbak.moviesapp.ui.navigation.AppNavigation
+import com.kbak.moviesapp.ui.theme.MoviesAppTheme
 import com.kbak.moviesapp.ui.viewmodel.GenreViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieDetailsViewModel
 import com.kbak.moviesapp.ui.viewmodel.MovieImagesViewModel
@@ -25,7 +26,9 @@ class MainActivity : ComponentActivity() {
             val movieDetailsViewModel: MovieDetailsViewModel = hiltViewModel()
             val movieImagesViewModel: MovieImagesViewModel = hiltViewModel()
             enableEdgeToEdge()
-            AppNavigation(navController, movieViewModel, genreViewModel, movieDetailsViewModel, movieImagesViewModel)
+            MoviesAppTheme {
+                AppNavigation(navController, movieViewModel, genreViewModel, movieDetailsViewModel, movieImagesViewModel)
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.kbak.moviesapp.data.local.MovieEntity
 
 data class Movie(
+    val localId: Int = 0,
     val adult: Boolean,
     @SerializedName("backdrop_path")
     val backdropPath: String?, // Allow nullable
@@ -41,6 +42,7 @@ data class Movie(
 // Converts Room Entity (MovieEntity) → API Model (Movie)
 fun MovieEntity.toMovie(): Movie {
     return Movie(
+        localId = this.localId,
         id = this.id,
         title = this.title,
         originalTitle = this.originalTitle,
