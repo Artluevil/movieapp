@@ -29,7 +29,8 @@ import com.kbak.moviesapp.ui.theme.MoviesAppTheme
 fun MovieListCard(
     movie: Movie,
     genreNames: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val glowAlpha by infiniteTransition.animateFloat(
@@ -44,6 +45,8 @@ fun MovieListCard(
     Box(
         modifier = Modifier
             .padding(6.dp)
+            .width(180.dp)
+            .height(360.dp)
             .shadow(
                 elevation = 28.dp,
                 shape = RoundedCornerShape(14.dp),

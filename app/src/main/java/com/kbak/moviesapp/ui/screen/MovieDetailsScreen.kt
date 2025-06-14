@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import com.kbak.moviesapp.data.remote.model.Movie
 import com.kbak.moviesapp.data.remote.model.MovieDetailsResponse
 import com.kbak.moviesapp.data.remote.model.MovieImagesResponse
-import com.kbak.moviesapp.ui.components.AnimatedBackground
 import com.kbak.moviesapp.ui.components.MovieDetailsContent
 import com.kbak.moviesapp.ui.components.OfflineMovieDetailsContent
 import com.kbak.moviesapp.ui.viewmodel.MovieDetailsViewModel

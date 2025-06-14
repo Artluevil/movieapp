@@ -34,17 +34,7 @@ fun MovieDetailsContent(genres: String, details: MovieDetailsResponse, images: M
         fontSize = 16.sp,
         modifier = Modifier.padding(bottom = 8.dp)
     )
-    /*
-    AsyncImage(
-        model = details.fullPosterPath.takeIf { it.startsWith("https") }, // Load only valid URLs
-        contentDescription = details.title,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(360.dp), // Max height
-        error = painterResource(id = R.drawable.placeholder_poster), // Fallback if image fails
-        placeholder = painterResource(id = R.drawable.placeholder_poster) // Placeholder while loading
-    )
-    */
+
     ImagesSection(images)
     Spacer(modifier = Modifier.height(8.dp))
 

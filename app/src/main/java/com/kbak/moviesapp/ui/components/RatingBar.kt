@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -44,6 +45,12 @@ fun RatingBar(voteAverage: Float) {
                 .background(brush = ratingBrush, shape = RoundedCornerShape(4.dp))
         )
     }
+}
+
+@Composable
+@Preview
+fun RatingBarPreview() {
+    RatingBar(voteAverage = 3.5F)
 }
 
 

@@ -1,6 +1,5 @@
 package com.kbak.moviesapp.data.repository
 
-import android.util.Log
 import com.kbak.moviesapp.data.local.MovieDao
 import com.kbak.moviesapp.data.local.MovieEntity
 import com.kbak.moviesapp.data.remote.api.MovieApiService
@@ -32,18 +31,15 @@ class MovieRepository @Inject constructor(
                 response.body()?.let { movieListResponse ->
                     val movies = movieListResponse.results
 
-                    // Store movies in Room Database
                     movieDao.deleteAllMovies() // Clear old movies
                     movieDao.insertMovies(movies.map { it.toMovieEntity() })
 
                     ApiResult.Success(movieListResponse)
                 } ?: ApiResult.Error("Empty response body")
             } else {
-                //Log.e("MovieRepository", "❌ API Error: ${response.code()} - ${response.message()}")
                 ApiResult.Error("API Error: ${response.code()} - ${response.message()}")
             }
         } catch (e: Exception) {
-            //Log.e("MovieRepository", "❌ Network Error: ${e.message}")
             ApiResult.Error("Network Error: ${e.message}")
         }
     }
