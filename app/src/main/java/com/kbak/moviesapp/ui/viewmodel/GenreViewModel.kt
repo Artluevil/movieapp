@@ -20,9 +20,9 @@ class GenreViewModel @Inject constructor(
         fetchGenres()
     }
 
-    fun fetchGenres() {
+    private fun fetchGenres() {
         viewModelScope.launch {
-            fetchGenresUseCase().onEach { _ -> }
+            fetchGenresUseCase().collect{}
         }
     }
 
