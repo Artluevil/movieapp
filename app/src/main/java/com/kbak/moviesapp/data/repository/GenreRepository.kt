@@ -1,6 +1,5 @@
 package com.kbak.moviesapp.data.repository
 
-import android.util.Log
 import com.kbak.moviesapp.data.local.GenreDao
 import com.kbak.moviesapp.data.local.GenreEntity
 import com.kbak.moviesapp.data.remote.api.GenreApiService
