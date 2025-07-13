@@ -79,6 +79,10 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.splashscreen)
     // Testing Dependencies
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -92,4 +96,8 @@ ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.incremental", "true")
     arg("room.expandProjection", "true")
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }

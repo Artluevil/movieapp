@@ -17,9 +17,6 @@ class MovieRepository @Inject constructor(
     private val apiService: MovieApiService,
     private val movieDao: MovieDao // Inject MovieDao for Room DB
 ) {
-    /*init {
-        Log.d("HiltCheck", "✅ Hilt injected MovieRepository successfully!")
-    }*/
 
     /**
      * Fetch popular movies from API and store in Room DB.
@@ -61,6 +58,5 @@ class MovieRepository @Inject constructor(
     }
     suspend fun saveMoviesToDb(movies: List<MovieEntity>) {
         movieDao.insertMovies(movies)
-        //Log.d("MovieRepository", "💾 Saved ${movies.size} movies to Room DB!")
     }
 }

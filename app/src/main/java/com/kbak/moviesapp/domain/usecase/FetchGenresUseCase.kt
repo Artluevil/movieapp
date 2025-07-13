@@ -12,7 +12,8 @@ class FetchGenresUseCase @Inject constructor(
 ) {
     operator fun invoke(): Flow<List<GenreEntity>> = flow {
         val genres = repository.fetchGenresFromApi()
-        repository.insertGenres(genres.map { GenreEntity(it.id, it.name) })
+        repository.insertGenres(genres)
+
         emitAll(repository.getGenres())
     }
 }

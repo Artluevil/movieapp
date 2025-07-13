@@ -30,7 +30,8 @@ class GenreRepository @Inject constructor(
     suspend fun fetchGenresFromApi(): List<GenreEntity> {
         return try {
             val response = genreApiService.getGenres()
-            response.genres.map { GenreEntity(it.id, it.name) }
+            val genres = response.genres.map { GenreEntity(it.id, it.name) }
+            genres
         } catch (e: Exception) {
             emptyList()
         }

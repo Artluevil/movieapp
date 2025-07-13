@@ -41,7 +41,6 @@ class MovieRemoteMediator(
             if (!response.isSuccessful) {
                 throw HttpException(response)
             }
-
             val moviesFromApi = response.body()?.results?.map { it.toMovieEntity() } ?: emptyList()
             val before = db.movieDao().countAllMovies()
 
