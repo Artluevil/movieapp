@@ -83,8 +83,7 @@ class FetchMovieDetailsUseCaseTest {
     fun `invoke emits Error when repository throws exception`() = runTest {
         val movieId = 123
         val exceptionMessage = "Network error"
-
-        coEvery { repository.getDetailsOfAMovie(movieId) } throws RuntimeException(exceptionMessage)
+        coEvery { repository.getDetailsOfAMovie(movieId) } returns ApiResult.Error(exceptionMessage)
 
         useCase(movieId).test {
             assertEquals(ApiResult.Loading, awaitItem())

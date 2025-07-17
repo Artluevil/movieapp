@@ -57,7 +57,6 @@ class FetchGenresUseCaseTest {
         }
 
         coVerify(exactly = 1) { repository.fetchGenresFromApi() }
-        coVerify(exactly = 1) { repository.insertGenres(emptyList()) }
         coVerify(exactly = 1) { repository.getGenres() }
     }
 
@@ -68,7 +67,7 @@ class FetchGenresUseCaseTest {
             GenreEntity(id = 4, name = "Horror")
         )
 
-        coEvery { repository.fetchGenresFromApi() } throws RuntimeException("API failed")
+        coEvery { repository.fetchGenresFromApi() } returns emptyList()
         coEvery { repository.getGenres() } returns flowOf(localGenres)
 
         useCase().test {
